@@ -2,6 +2,7 @@ class LandmarksController < ApplicationController
 
   get '/landmarks' do
     #display landmarks
+    @landmarks = Landmark.all
     erb :"/landmarks/index"
   end
 
@@ -14,6 +15,7 @@ class LandmarksController < ApplicationController
 
   get '/landmarks/:id' do
     #display attributes of specific landmark
+    @landmark = Landmark.find_by_id(params[:id])
     erb :"/landmarks/show"
   end
 
@@ -25,6 +27,7 @@ class LandmarksController < ApplicationController
   get '/landmarks/:id/edit' do
     #render edit form
     #select landmark object with id for use in form
+    @landmark = Landmark.find_by_id(params[:id])
     erb :"/landmarks/edit"
   end
 

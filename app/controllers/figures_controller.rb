@@ -24,33 +24,11 @@ class FiguresController < ApplicationController
   post '/figures' do
     #create a new figure
     @figure = Figure.create(name: params[:figure][:name])
-    #create a new landmark if they filled in the field
-    #shovel that landmark's id into params[landmark_ids]
-    if !!params[:landmark][:name].empty?
-        @landmark = Landmark.create(name: params[:landmark][:name])
-        params[:figure][:landmark_ids] << @landmark.id #too low level?
-        # @figure.landmarks << @landmark
-    #if the landmark field is blank, then simply assign the ids
-    else
-      @figure.landmark_ids = params[landmark_ids]
+    if !!params[:title][:name].empty?
+      Title.add_new_title(params)
     end
-
-
-    #create a new landmark if they filled in the field
-    #shovel that landmark's id into params[landmark_ids]
-    if !!params[:landmark][:name].empty?
-        @landmark = Landmark.create(name: params[:landmark][:name])
-        params[:figure][:landmark_ids] << @landmark.id #too low level?
-        # @figure.landmarks << @landmark
-    #if the landmark field is blank, then simply assign the ids
-    else
-      @figure.landmark_ids = params[landmark_ids]
-    end
-
-
-
-    @figure.landmarks =
-
+    @figure.landmarks = params[:landmark_ids]
+    #binding.pry
     reroute to "/figures/:id"
   end
 
@@ -60,6 +38,8 @@ class FiguresController < ApplicationController
     #form will contain current figure name, landmarks, and titles in fields
     #form will have hidden input that changes post to Patch
     #select current object by id
+    @figure = Figure.find_by_id(params[:id])
+    #binding.pry
     erb :"/figures/edit"
   end
 
