@@ -13,9 +13,13 @@ class FiguresController < ApplicationController
     erb :"/figures/new"
   end
 
+  get '/figure/:id' do
+    #render show page
+  end
+
   post '/figures' do
     #display new figure and its attributes (figure name, landmarks, and titles)
-    erb :"/figures/show"
+    #reroute to '/figures/:id'
   end
 
   get '/figures/:id/edit' do
@@ -26,7 +30,12 @@ class FiguresController < ApplicationController
     erb :"/figures/edit"
   end
 
+  patch '/figures/edit' do
+    #reroutes to '/figures/:id'
+    #updates all objects and attributes
+    #saves
 
+  end
 
 
 end
