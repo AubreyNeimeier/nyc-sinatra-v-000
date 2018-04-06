@@ -1,0 +1,7 @@
+<h1><%= @figure.name %></h1>
+<br>
+<h3> Landmarks dedicated : </h3>
+<br>
+<% @landmarks.each do |landmark| %>
+  <p><a href="/landmarks/<%=landmark.id%>"><%= landmark.name %></a> - <%= landmark.year_completed %>
+<%end%>

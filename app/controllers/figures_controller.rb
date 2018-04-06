@@ -13,11 +13,16 @@ class FiguresController < ApplicationController
     erb :"/figures/new"
   end
 
-  get '/figure/:id' do
+  get '/figures/:id' do
     #render show page
+    @figure = Figure.find_by_id(params[:id])
+    @landmarks = @figure.landmarks
+    #binding.pry
+    erb :"figures/show"
   end
 
   post '/figures' do
+    #binding.pry
     #display new figure and its attributes (figure name, landmarks, and titles)
     #reroute to '/figures/:id'
   end
