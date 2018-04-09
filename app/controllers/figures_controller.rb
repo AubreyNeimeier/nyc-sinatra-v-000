@@ -71,4 +71,3 @@ class FiguresController < ApplicationController
 
 
 end
-  
