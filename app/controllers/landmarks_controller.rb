@@ -21,7 +21,10 @@ class LandmarksController < ApplicationController
 
   post '/landmarks' do
     #capture info and instantiate new landmark and attributes
-    #redirect to "/landmarks/:id"
+    @landmark = Landmark.create(params[:landmark])
+    @landmark.save
+
+    redirect to "/landmarks/#{@landmark.id}"
   end
 
   get '/landmarks/:id/edit' do
@@ -31,9 +34,11 @@ class LandmarksController < ApplicationController
     erb :"/landmarks/edit"
   end
 
-  patch '/landmarks/:id' do
+  post '/landmarks/:id' do
     #update landmarks and attributes, save
-    #redirect to "/landmarks/:id"
+    @landmark = Landmark.find(params[:id])
+    @landmark.update(params[:landmark])
+    redirect to "/landmarks/#{@landmark.id}"
   end
 
 end

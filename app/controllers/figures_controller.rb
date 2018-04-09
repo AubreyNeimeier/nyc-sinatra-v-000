@@ -16,20 +16,26 @@ class FiguresController < ApplicationController
   get '/figures/:id' do
     #render show page
     #display new figure and its attributes (figure name, landmarks, and titles)
-
     @figure = Figure.find_by_id(params[:id])
+    #binding.pry
     erb :"figures/show"
   end
 
   post '/figures' do
     #create a new figure
-    @figure = Figure.create(name: params[:figure][:name])
-    if !!params[:title][:name].empty?
-      Title.add_new_title(params)
+    # this would create a figure but would only initialize it's name. we can use mass assignment to also assing title_ids and landmark_ids
+    #@figure = Figure.create(name: params[:figure][:name])
+    @figure = Figure.create(params[:figure])
+    if !params[:title][:name].empty?
+      @figure.titles << Title.create(name: params[:title][:name])
     end
-    @figure.landmarks = params[:landmark_ids]
-    #binding.pry
-    reroute to "/figures/:id"
+
+    if !params[:landmark][:name].empty?
+      @figure.landmarks << Landmark.create(params[:landmark])
+    end
+
+    @figure.save
+    redirect to "/figures/#{@figure.id}"
   end
 
 
@@ -43,12 +49,26 @@ class FiguresController < ApplicationController
     erb :"/figures/edit"
   end
 
-  patch '/figures/edit' do
+  post '/figures/:id' do
     #reroutes to '/figures/:id'
     #updates all objects and attributes
     #saves
+    #binding.pry
+    @figure = Figure.find(params[:id])
+    @figure.update(params[:figure])
+    #we can use mass assignment to update title_ids and landmark_id and name all at once
+    if !params[:title][:name].empty?
+      @figure.titles << Title.create(name: params[:title][:name])
+    end
 
+    if !params[:landmark][:name].empty?
+      @figure.landmarks << Landmark.create(params[:landmark])
+    end
+
+    @figure.save
+    redirect to "/figures/#{@figure.id}"
   end
 
 
 end
+  
