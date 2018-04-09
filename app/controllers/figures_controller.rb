@@ -49,7 +49,7 @@ class FiguresController < ApplicationController
     erb :"/figures/edit"
   end
 
-  post '/figures/:id' do
+  patch '/figures/:id' do
     #reroutes to '/figures/:id'
     #updates all objects and attributes
     #saves
